@@ -1,14 +1,14 @@
-const { Sequelize } = require('sequelize');
-require('dotenv').config();
+const { Sequelize } = require("sequelize");
+require("dotenv").config();
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME || 'monopoly',
-  process.env.DB_USER || 'monopoly',
-  process.env.DB_PASSWORD || 'monopoly_pass',
+  process.env.DB_NAME || "monopoly",
+  process.env.DB_USER || "monopoly",
+  process.env.DB_PASSWORD || "monopoly_pass",
   {
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '3306'),
-    dialect: 'mysql',
+    host: process.env.DB_HOST || "localhost",
+    port: parseInt(process.env.DB_PORT || "3306"),
+    dialect: "mysql",
     logging: false,
     pool: {
       max: 10,
@@ -16,7 +16,7 @@ const sequelize = new Sequelize(
       acquire: 30000,
       idle: 10000,
     },
-  }
+  },
 );
 
 module.exports = sequelize;
