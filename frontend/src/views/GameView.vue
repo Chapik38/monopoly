@@ -116,7 +116,7 @@ const currentPlayerName = computed(() => {
 
 const winnerName = computed(() => {
   if (!gameStore.gameState) return '';
-  const w = gameStore.gameState.players.find(p => p.user_id === gameStore.gameState.winner_id);
+  const w = gameStore.gameState.players.find(p => p.id === gameStore.gameState.winner_id);
   return w?.username || '';
 });
 

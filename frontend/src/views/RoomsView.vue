@@ -33,7 +33,7 @@
         <div v-for="room in rooms" :key="room.id" class="room-card" @click="goToRoom(room.id)">
           <div class="room-info">
             <h3>{{ room.name }}</h3>
-            <span class="room-players">{{ room.player_count || 0 }} / {{ room.max_players }}</span>
+            <span class="room-players">{{ room.players?.length || 0 }} / {{ room.max_players }}</span>
           </div>
           <div class="room-meta">
             <span>Капитал: {{ room.starting_capital }}$</span>
@@ -61,7 +61,7 @@ const newRoom = ref({ name: '', max_players: 4, starting_capital: 1500 });
 async function loadRooms() {
   try {
     const res = await api.get('/api/rooms');
-    rooms.value = res.data;
+    rooms.value = res.data.rooms || res.data;
   } catch (err) {
     error.value = 'Ошибка загрузки комнат';
   }

@@ -71,7 +71,7 @@ router.post('/', authMiddleware, async (req, res) => {
       chip_color: 'red',
     });
 
-    res.status(201).json({ id: room.id, name: room.name, status: room.status });
+    res.status(201).json({ room: { id: room.id, name: room.name, status: room.status } });
   } catch (err) {
     console.error('Create room error:', err);
     res.status(500).json({ error: 'Ошибка сервера' });
@@ -153,7 +153,8 @@ router.post('/:id/ready', authMiddleware, async (req, res) => {
     });
     if (!rp) return res.status(404).json({ error: 'Вы не в этой комнате' });
 
-    rp.is_ready = req.body.is_ready !== undefined ? req.body.is_ready : !rp.is_ready;
+    const body = req.body || {};
+    rp.is_ready = body.is_ready !== undefined ? body.is_ready : !rp.is_ready;
     await rp.save();
 
     res.json({ is_ready: rp.is_ready });
@@ -214,7 +215,7 @@ router.post('/:id/start', authMiddleware, async (req, res) => {
     room.game_session_id = session.id;
     await room.save();
 
-    res.json({ session_id: session.id, message: 'Игра начата!' });
+    res.json({ session_id: session.id, game_session_id: session.id, message: 'Игра начата!' });
   } catch (err) {
     console.error('Start game error:', err);
     res.status(500).json({ error: 'Ошибка сервера' });
